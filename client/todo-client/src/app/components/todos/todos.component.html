@@ -15,17 +15,16 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">Description</th>
-                <th scope="col">Created</th>
-                <th scope="col">Completed</th>                
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">IsComplete</th>                
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>do</td>
+              <tr *ngFor="let todo of todos">                
+                <td>{{todo.id}}</td>
+                <td>{{todo.name}}</td>
+                <td>{{todo.isComplete}}</td>                
               </tr>              
             </tbody>
           </table>            
