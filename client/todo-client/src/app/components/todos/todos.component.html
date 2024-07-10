@@ -1,11 +1,10 @@
-<p>todos works!</p>
 <div class="container">
     <div class="row">
         <h1>Create new todo</h1>
-        <form>
+        <form #form="ngForm" (ngSubmit)="addTodo()">
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <input type="text" class="form-control" id="description">
+                <input type="text" class="form-control" id="description" name="description" [(ngModel)]="newTodo.name">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>               
         </form>        
@@ -16,15 +15,19 @@
             <thead>
               <tr>
                 <th scope="col">Id</th>
-                <th scope="col">Name</th>
+                <th scope="col">Description</th>
                 <th scope="col">IsComplete</th>                
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let todo of todos">                
                 <td>{{todo.id}}</td>
-                <td>{{todo.name}}</td>
-                <td>{{todo.isComplete}}</td>                
+                <td [class.stroke]="todo.isComplete">{{todo.name}}</td>
+                <td><input type="checkbox" 
+                  [checked]="todo.isComplete"
+                  (change)="onCompleteChange(todo.id, todo)"></td>
+                  <td><a [routerLink]="[]" (click)="deleteTodo(todo.id)">delete</a></td>              
+                <!--<td>{{todo.craetedDate | date: 'MM/dd/yyyy hh:mm a'}}</td>-->                
               </tr>              
             </tbody>
           </table>            

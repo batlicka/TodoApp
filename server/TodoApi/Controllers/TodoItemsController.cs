@@ -72,6 +72,8 @@ namespace TodoApi.Controllers
             return NoContent();
         }
 
+
+
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -79,8 +81,7 @@ namespace TodoApi.Controllers
         {
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
-
-            //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            
             return CreatedAtAction(nameof(PostTodoItem), new { id = todoItem.Id }, todoItem);
         }
 
@@ -96,7 +97,7 @@ namespace TodoApi.Controllers
 
             _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
-
+            await _context.TodoItems.AsNoTracking().FirstOrDefaultAsync();
             return NoContent();
         }
 
