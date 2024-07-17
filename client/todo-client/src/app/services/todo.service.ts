@@ -36,4 +36,14 @@ export class TodoService {
   deleteTodo(id: string) : Observable<Todo> {
     return this.http.delete<Todo>(this.baseApiUrl + '/api/TodoItems/' + id)
   }
+ //get all completed
+  getAllCompletedTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.baseApiUrl + '/api/get-completed-todos');
+  }
+
+  //undo-completed-todo/{id:Guid}
+  undoCompletedTodo(id: string, todo: Todo) : Observable<Todo> {
+    return this.http.put<Todo>(this.baseApiUrl + '/api/' + id, todo)
+  }
+
 }

@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { TodosComponent } from './components/todos/todos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { TodoCompletedComponent } from './components/todo-completed/todo-completed.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodosComponent,    
+    TodosComponent,
+    TodoCompletedComponent,    
   ],
   imports: [
     BrowserModule,

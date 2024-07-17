@@ -8,7 +8,7 @@ import { Todo } from '../../models/todo.model';
   styleUrl: './todos.component.css',
 })
 export class TodosComponent implements OnInit {
-
+  editMode : boolean = true;
   todos: Todo[] = [];
   newTodo: Todo = {
     id: '',
@@ -42,8 +42,7 @@ export class TodosComponent implements OnInit {
     });
   }
 
-  onCompleteChange(id : string, todo : Todo) {
-    todo.isComplete = !todo.isComplete;
+  onCompleteChange(id : string, todo : Todo) {    
     this.todoService.updatedTodo(id, todo)
     .subscribe({
       next: (response) => {
@@ -60,5 +59,17 @@ export class TodosComponent implements OnInit {
       }
     })
     
+  } 
+
+  updatet(todo: Todo){
+
+  }
+
+  cancelt(todo: Todo) {
+    this.editMode=false;
+  }
+
+  onEdit(todo: Todo) {
+    this.editMode=true;
   }
 }

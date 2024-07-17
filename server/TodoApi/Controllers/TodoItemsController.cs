@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -99,6 +100,32 @@ namespace TodoApi.Controllers
             await _context.SaveChangesAsync();
             await _context.TodoItems.AsNoTracking().FirstOrDefaultAsync();
             return NoContent();
+        }
+
+        //get all completed
+        [HttpGet]
+        [Route("get-completed-todos")]
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetCompletedTodoItems()
+        {
+            //return await _context.TodoItems.ToListAsync();
+            var todos = await _context.TodoItems.Where(x => x.IsComplete == true).ToListAsync();
+            return Ok(todos);
+        }
+
+        [HttpPut]
+        [Route("undo-completed-todo/{id:Guid}")]
+        public async Task<IActionResult> UndoCompletedTodo([FromRoute] Guid id, TodoItem undoDeletedTodoRequest) 
+        {
+            var todo = await _context.TodoItems.FindAsync(id);
+
+            if (todo == null) {
+                return NotFound();
+            }
+
+            todo.IsComplete = false;
+            await _context.SaveChangesAsync();
+
+            return Ok(todo);
         }
 
         private bool TodoItemExists(long id)
