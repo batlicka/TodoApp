@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row">
-        <h1>Completed Todos</h1>
+  <div class="row">
+    <h1>Completed Todos</h1>
     <table class="table">
       <thead>
         <tr>
@@ -11,17 +11,28 @@
       </thead>
       <tbody>
         <tr *ngFor="let todo of todos">
-          <td>{{todo.id}}</td>
+          <td>{{ todo.id }}</td>
           <td [class.stroke]="todo.isComplete">
-            {{todo.name}}
+            {{ todo.name }}
           </td>
-          <td [class.stroke]="todo.isComplete">{{todo.name}}</td>
-          <td><input type="checkbox" 
-            [attr.disabled]="true" 
-            [checked]="todo.isComplete"></td>
-          <td><button class="btn btn-sm btn-success" (click)="undoCompleted(todo.id, todo)">Undo Completed</button></td>
+          <td [class.stroke]="todo.isComplete">{{ todo.name }}</td>
+          <td>
+            <input
+              type="checkbox"
+              [attr.disabled]="true"
+              [checked]="todo.isComplete"
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-success"
+              (click)="undoCompleted(todo.id, todo)"
+            >
+              Undo Completed
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
-  </div> 
+  </div>
 </div>

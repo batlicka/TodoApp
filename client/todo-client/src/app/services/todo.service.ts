@@ -17,7 +17,9 @@ export class TodoService {
   }
 
   getAllUncompletedTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems/get-all-uncompleted-todos')
+    return this.http.get<Todo[]>(
+      this.baseApiUrl + '/api/TodoItems/get-all-uncompleted-todos'
+    );
   }
 
   addTodo(newTodo: Todo): Observable<Todo> {
@@ -37,17 +39,21 @@ export class TodoService {
     return this.http.put<Todo>(this.baseApiUrl + '/api/TodoItems/' + id, todo);
   }
 
-  deleteTodo(id: string) : Observable<Todo> {
-    return this.http.delete<Todo>(this.baseApiUrl + '/api/TodoItems/' + id)
+  deleteTodo(id: string): Observable<Todo> {
+    return this.http.delete<Todo>(this.baseApiUrl + '/api/TodoItems/' + id);
   }
- //get all completed
+  //get all completed
   getAllCompletedTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems/get-all-completed-todos');
+    return this.http.get<Todo[]>(
+      this.baseApiUrl + '/api/TodoItems/get-all-completed-todos'
+    );
   }
 
   //undo-completed-todo/{id:Guid}
-  undoCompletedTodo(id: string, todo: Todo) : Observable<Todo> {
-    return this.http.put<Todo>(this.baseApiUrl + '/api/TodoItems/undo-completed-todo/' + id, todo)
+  undoCompletedTodo(id: string, todo: Todo): Observable<Todo> {
+    return this.http.put<Todo>(
+      this.baseApiUrl + '/api/TodoItems/undo-completed-todo/' + id,
+      todo
+    );
   }
-
 }
