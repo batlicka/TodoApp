@@ -104,7 +104,7 @@ namespace TodoApi.Controllers
 
         //get all completed
         [HttpGet]
-        [Route("get-completed-todos")]
+        [Route("get-all-completed-todos")]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetCompletedTodoItems()
         {
             //return await _context.TodoItems.ToListAsync();
@@ -112,9 +112,18 @@ namespace TodoApi.Controllers
             return Ok(todos);
         }
 
+        [HttpGet]
+        [Route("get-all-uncompleted-todos")]
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetUnCompletedTodoItems()
+        {
+            //return await _context.TodoItems.ToListAsync();
+            var todos = await _context.TodoItems.Where(x => x.IsComplete == false).ToListAsync();
+            return Ok(todos);
+        }
+
         [HttpPut]
-        [Route("undo-completed-todo/{id:Guid}")]
-        public async Task<IActionResult> UndoCompletedTodo([FromRoute] Guid id, TodoItem undoDeletedTodoRequest) 
+        [Route("undo-completed-todo/{id}")]
+        public async Task<IActionResult> UndoCompletedTodo([FromRoute] long id, TodoItem undoDeletedTodoRequest) 
         {
             var todo = await _context.TodoItems.FindAsync(id);
 

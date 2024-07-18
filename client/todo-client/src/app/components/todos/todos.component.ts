@@ -26,7 +26,7 @@ export class TodosComponent implements OnInit {
 
 
   getAllTodos() {
-    this.todoService.getAllTodos().subscribe({
+    this.todoService.getAllUncompletedTodos().subscribe({
       next: (todos) => {
         this.todos = todos;
       },
@@ -43,6 +43,7 @@ export class TodosComponent implements OnInit {
   }
 
   onCompleteChange(id : string, todo : Todo) {    
+    todo.isComplete = !todo.isComplete;
     this.todoService.updatedTodo(id, todo)
     .subscribe({
       next: (response) => {

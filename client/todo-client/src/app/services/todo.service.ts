@@ -16,6 +16,10 @@ export class TodoService {
     return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems');
   }
 
+  getAllUncompletedTodos(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems/get-all-uncompleted-todos')
+  }
+
   addTodo(newTodo: Todo): Observable<Todo> {
     newTodo.id = '0';
     console.log('new todo: :' + JSON.stringify(newTodo));
@@ -38,12 +42,12 @@ export class TodoService {
   }
  //get all completed
   getAllCompletedTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.baseApiUrl + '/api/get-completed-todos');
+    return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems/get-all-completed-todos');
   }
 
   //undo-completed-todo/{id:Guid}
   undoCompletedTodo(id: string, todo: Todo) : Observable<Todo> {
-    return this.http.put<Todo>(this.baseApiUrl + '/api/' + id, todo)
+    return this.http.put<Todo>(this.baseApiUrl + '/api/TodoItems/undo-completed-todo/' + id, todo)
   }
 
 }

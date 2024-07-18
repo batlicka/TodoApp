@@ -17,8 +17,9 @@
           </td>
           <td [class.stroke]="todo.isComplete">{{todo.name}}</td>
           <td><input type="checkbox" 
-            [checked]="todo.isComplete"></td>        
-          <td><a [routerLink]="[]" (click)="undoCompleted(todo.id, todo)">delete</a></td>
+            [attr.disabled]="true" 
+            [checked]="todo.isComplete"></td>
+          <td><button class="btn btn-sm btn-success" (click)="undoCompleted(todo.id, todo)">Undo Completed</button></td>
         </tr>
       </tbody>
     </table>
