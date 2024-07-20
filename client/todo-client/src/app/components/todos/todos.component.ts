@@ -8,7 +8,7 @@ import { Todo } from '../../models/todo.model';
   styleUrl: './todos.component.css',
 })
 export class TodosComponent implements OnInit {
-  editMode : boolean = true;
+  editMode: boolean = true;
   todos: Todo[] = [];
   newTodo: Todo = {
     id: '',
@@ -16,14 +16,13 @@ export class TodosComponent implements OnInit {
     isComplete: false,
     //completedDate: new Date(),
     //createdDate: new Date(),
-  }
+  };
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.getAllTodos();
   }
-
 
   getAllTodos() {
     this.todoService.getAllUncompletedTodos().subscribe({
@@ -35,42 +34,37 @@ export class TodosComponent implements OnInit {
 
   addTodo() {
     this.todoService.addTodo(this.newTodo).subscribe({
-      next: (todo) =>  {
-        console.log("new todo obtained from server: " + JSON.stringify(todo))
+      next: (todo) => {
+        console.log('new todo obtained from server: ' + JSON.stringify(todo));
         this.getAllTodos();
-      }
+      },
     });
   }
 
-  onCompleteChange(id : string, todo : Todo) {    
+  onCompleteChange(id: string, todo: Todo) {
     todo.isComplete = !todo.isComplete;
-    this.todoService.updatedTodo(id, todo)
-    .subscribe({
+    this.todoService.updatedTodo(id, todo).subscribe({
       next: (response) => {
         this.getAllTodos();
-      }
-    })
+      },
+    });
   }
 
   deleteTodo(id: string) {
-    this.todoService.deleteTodo(id)
-    .subscribe({
+    this.todoService.deleteTodo(id).subscribe({
       next: (response) => {
         this.getAllTodos();
-      }
-    })
-    
-  } 
-
-  updatet(todo: Todo){
-
+      },
+    });
   }
 
+  updatet(todo: Todo) {}
+
   cancelt(todo: Todo) {
-    this.editMode=false;
+    this.editMode = false;
   }
 
   onEdit(todo: Todo) {
-    this.editMode=true;
+    this.editMode = true;
   }
 }
