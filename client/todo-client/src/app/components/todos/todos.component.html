@@ -62,14 +62,22 @@
         <tr *ngFor="let todo of todos">
           <td>{{ todo.id }}</td>
           <td [class.stroke]="todo.isComplete">
-            <div *ngIf="editMode">
-              <!--todo.isEdit-->
+            <div
+              *ngIf="
+                todo.id | isEditModeActivePipe : todosInEditMode as isEditActive
+              "
+            >
               <input type="text" [(ngModel)]="todo.name" class="form-control" />
             </div>
-            <div *ngIf="!editMode">
+            <div
+              *ngIf="
+                !(
+                  todo.id | isEditModeActivePipe : todosInEditMode
+                ) as isEditActive
+              "
+            >
               {{ todo.name }}
             </div>
-            <!--todo.isEdit-->
           </td>
           <td>
             <input
@@ -79,11 +87,20 @@
             />
           </td>
           <td>
-            <a [routerLink]="[]" (click)="deleteTodo(todo.id)">delete</a>
-            <div *ngIf="editMode">
+            <button
+              class="btn btn-danger btn-primary"
+              (click)="deleteTodo(todo.id)"
+            >
+              Delete
+            </button>
+            <div
+              *ngIf="
+                todo.id | isEditModeActivePipe : todosInEditMode as isEditActive
+              "
+            >
               <button
                 class="btn btn-sm btn-success"
-                (click)="onCompleteChange(todo.id, todo)"
+                (click)="onChange(todo.id, todo)"
               >
                 Update
               </button>
@@ -91,13 +108,18 @@
                 Cancel
               </button>
             </div>
-            <div *ngIf="!editMode">
+            <div
+              *ngIf="
+                !(
+                  todo.id | isEditModeActivePipe : todosInEditMode
+                ) as isEditActive
+              "
+            >
               <button class="btn btn-sm btn-success" (click)="onEdit(todo)">
                 Edit
               </button>
             </div>
           </td>
-          <!--<td>{{todo.craetedDate | date: 'MM/dd/yyyy hh:mm a'}}</td>-->
         </tr>
       </tbody>
     </table>

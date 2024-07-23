@@ -1,5 +1,5 @@
 import { TodoService } from './../../services/todo.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Todo } from '../../models/todo.model';
 
 @Component({
@@ -10,18 +10,18 @@ import { Todo } from '../../models/todo.model';
 export class TodosComponent implements OnInit {
   editMode: boolean = true;
   todos: Todo[] = [];
+  todosInEditMode: string [] = [];
   newTodo: Todo = {
     id: '',
     name: '',
-    isComplete: false,
-    //completedDate: new Date(),
-    //createdDate: new Date(),
+    isComplete: false,    
   };
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService, private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getAllTodos();
+    console.log("content of todosInEditMode[]: " + JSON.stringify(this.todosInEditMode))
   }
 
   getAllTodos() {
@@ -50,6 +50,14 @@ export class TodosComponent implements OnInit {
     });
   }
 
+  onChange(id: string, todo: Todo) {    
+    this.todoService.updatedTodo(id, todo).subscribe({
+      next: (response) => {
+        this.getAllTodos();
+      },
+    });
+  }
+
   deleteTodo(id: string) {
     this.todoService.deleteTodo(id).subscribe({
       next: (response) => {
@@ -58,13 +66,32 @@ export class TodosComponent implements OnInit {
     });
   }
 
-  updatet(todo: Todo) {}
+  updatet(id: string, todo: Todo) {
+    this.onChange(id, todo);
+  }
 
   cancelt(todo: Todo) {
-    this.editMode = false;
+    //this.editMode = false;
+    this.filterOutId(todo.id); 
+    console.log("cancel | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode)) 
+    this.changeDetectorRef.detectChanges();     
   }
 
   onEdit(todo: Todo) {
-    this.editMode = true;
+    //this.editMode = true;    
+   if(!this.todosInEditMode.includes(todo.id.toString())){
+    this.todosInEditMode.push(todo.id.toString())
+    console.log("onEdit | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode));
+    this.changeDetectorRef.detectChanges()   
+   }
   }
+
+  filterOutId(id : string) {
+    //return this.todosInEditMode.filter(word => !word.includes(id));
+    id = id.toString();
+    const index = this.todosInEditMode.indexOf(id);
+    if (index !== -1) {
+      this.todosInEditMode.splice(index, 1);
+    }
+  }  
 }
