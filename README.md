@@ -15,7 +15,7 @@ client běží na: http://localhost:4200/
 4) `ng serve`
 
 ## Popis funkcionality
-- v horní liště jsou 2 položky menu na dvě stránky "Todos" a "Completed Todos"
+- v horní liště jsou 2 položky menu s odkazy na dvě stránky "Todos" a "Completed Todos"
 ![image](https://github.com/user-attachments/assets/713ba9cc-8c49-4a2f-9af4-e044662981ba)
 
 ### "Todos" 
