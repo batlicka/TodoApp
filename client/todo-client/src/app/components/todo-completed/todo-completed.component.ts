@@ -12,12 +12,7 @@ export class TodoCompletedComponent implements OnInit {
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.getAllTodos();
-    //this.todoService.getAllCompletedTodos().subscribe({
-    //next: (res : Todo[]) => {
-    //this.todos = res;
-    //},
-    //});
+    this.getAllTodos();    
   }
 
   undoCompleted(id: string, todo: Todo) {

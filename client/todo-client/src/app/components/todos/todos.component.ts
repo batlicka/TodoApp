@@ -7,26 +7,27 @@ import { Todo } from '../../models/todo.model';
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
-export class TodosComponent implements OnInit { 
+export class TodosComponent implements OnInit {
   todos: Todo[] = [];
-  todosInEditMode: string [] = [];
+  todosUnEditted: Todo[] = [];
+  todosInEditMode: string[] = [];
   newTodo: Todo = {
     id: '',
     name: '',
-    isComplete: false,    
+    isComplete: false,
   };
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.getAllTodos();
-    console.log("content of todosInEditMode[]: " + JSON.stringify(this.todosInEditMode))
   }
 
   getAllTodos() {
     this.todoService.getAllUncompletedTodos().subscribe({
       next: (todos) => {
         this.todos = todos;
+        //this.todosUnEditted = [...todos];               
       },
     });
   }
@@ -34,7 +35,6 @@ export class TodosComponent implements OnInit {
   addTodo() {
     this.todoService.addTodo(this.newTodo).subscribe({
       next: (todo) => {
-        console.log('new todo obtained from server: ' + JSON.stringify(todo));
         this.getAllTodos();
       },
     });
@@ -49,13 +49,13 @@ export class TodosComponent implements OnInit {
     });
   }
 
-  onChange(id: string, todo: Todo) {    
+  onChange(id: string, todo: Todo) {
     this.todoService.updatedTodo(id, todo).subscribe({
       next: (response) => {
         this.getAllTodos();
-        this.cancelt(todo);
+        this.cancel(todo);
       },
-    });    
+    });
   }
 
   deleteTodo(id: string) {
@@ -66,28 +66,24 @@ export class TodosComponent implements OnInit {
     });
   }
 
-  cancelt(todo: Todo) {
-    //this.editMode = false;
-    this.filterOutId(todo.id); 
-    console.log("cancel | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode))    
-    this.todosInEditMode = [...this.todosInEditMode];     
+  cancel(todo: Todo) {
+    this.filterOutId(todo.id);    
+    this.getAllTodos();  
+    //this.todos = [...this.todosUnEditted] 
   }
 
   onEdit(todo: Todo) {
-    //this.editMode = true;    
-   if(!this.todosInEditMode.includes(todo.id.toString())){
-    this.todosInEditMode.push(todo.id.toString())
-    console.log("onEdit | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode));   
-    this.todosInEditMode = [...this.todosInEditMode];  
-   }
+    if (!this.todosInEditMode.includes(todo.id.toString())) {
+      this.todosInEditMode.push(todo.id.toString());      
+      this.todosInEditMode = [...this.todosInEditMode];
+    }
   }
 
-  filterOutId(id : string) {
-    //return this.todosInEditMode.filter(word => !word.includes(id));
-    id = id.toString();
-    const index = this.todosInEditMode.indexOf(id);
+  filterOutId(id: string) {    
+    const index = this.todosInEditMode.indexOf(id.toString());
     if (index !== -1) {
       this.todosInEditMode.splice(index, 1);
     }
-  }  
+    this.todosInEditMode = [...this.todosInEditMode];
+  }
 }

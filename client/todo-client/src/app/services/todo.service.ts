@@ -7,52 +7,45 @@ import { Todo } from '../models/todo.model';
   providedIn: 'root',
 })
 export class TodoService {
-  baseApiUrl: string = 'https://localhost:7132';
+  baseApiUrl: string = 'https://localhost:7132/api/TodoItems';
   handleError: any;
 
   constructor(private http: HttpClient) {}
 
   getAllTodos(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.baseApiUrl + '/api/TodoItems');
+    return this.http.get<Todo[]>(this.baseApiUrl);
   }
 
   getAllUncompletedTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(
-      this.baseApiUrl + '/api/TodoItems/get-all-uncompleted-todos'
+      this.baseApiUrl + '/get-all-uncompleted-todos'
     );
   }
 
   addTodo(newTodo: Todo): Observable<Todo> {
     newTodo.id = '0';
     console.log('new todo: :' + JSON.stringify(newTodo));
-    return this.http.post<Todo>(this.baseApiUrl + '/api/TodoItems', newTodo);
+    return this.http.post<Todo>(this.baseApiUrl, newTodo);
   }
 
-  // addTodo2(newTodo: Todo): Observable<Todo> {
-  //   newTodo.id = '00000000-0000-0000-0000-000000000000';
-  //   return this.http
-  //     .post<Todo>(this.baseApiUrl + 'api/', newTodo)
-  //     .pipe(catchError(this.handleError('addTodo', newTodo)));
-  // }
-
   updatedTodo(id: string, todo: Todo): Observable<Todo> {
-    return this.http.put<Todo>(this.baseApiUrl + '/api/TodoItems/' + id, todo);
+    return this.http.put<Todo>(this.baseApiUrl + '/' + id, todo);
   }
 
   deleteTodo(id: string): Observable<Todo> {
-    return this.http.delete<Todo>(this.baseApiUrl + '/api/TodoItems/' + id);
+    return this.http.delete<Todo>(this.baseApiUrl + '/' + id);
   }
   //get all completed
   getAllCompletedTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(
-      this.baseApiUrl + '/api/TodoItems/get-all-completed-todos'
+      this.baseApiUrl + '/get-all-completed-todos'
     );
   }
 
   //undo-completed-todo/{id:Guid}
   undoCompletedTodo(id: string, todo: Todo): Observable<Todo> {
     return this.http.put<Todo>(
-      this.baseApiUrl + '/api/TodoItems/undo-completed-todo/' + id,
+      this.baseApiUrl + '/undo-completed-todo/' + id,
       todo
     );
   }
