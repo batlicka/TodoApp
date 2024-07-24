@@ -19,7 +19,9 @@ client běží na: http://localhost:4200/
 ![image](https://github.com/user-attachments/assets/713ba9cc-8c49-4a2f-9af4-e044662981ba)
 
 ### "Todos" 
-- po kliknutí na "Todos" se načte přehled všech úkolů ve stavu isComplete == false
+- nový úkol je možné založit
+  * vyplnit description
+  * kliknout na tlačítko "Add new +"
 - úkol je možné smazat kliknutím na tlačíto "Delete"
 - descrtiption úkolu je možné editovat pomocí tlačítka "Edit"
 ### "Completed Todos" 
