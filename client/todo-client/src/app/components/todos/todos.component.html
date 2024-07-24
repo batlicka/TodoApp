@@ -64,7 +64,7 @@
           <td [class.stroke]="todo.isComplete">
             <div
               *ngIf="
-                todo.id | isEditModeActivePipe : todosInEditMode as isEditActive
+                todo.id | isEditModeActivePipe : todosInEditMode 
               "
             >
               <input type="text" [(ngModel)]="todo.name" class="form-control" />
@@ -73,7 +73,7 @@
               *ngIf="
                 !(
                   todo.id | isEditModeActivePipe : todosInEditMode
-                ) as isEditActive
+                ) 
               "
             >
               {{ todo.name }}
@@ -102,7 +102,7 @@
                 class="btn btn-sm btn-success"
                 (click)="onChange(todo.id, todo)"
               >
-                Update
+                Save
               </button>
               <button class="btn btn-sm btn-success" (click)="cancelt(todo)">
                 Cancel
@@ -112,7 +112,7 @@
               *ngIf="
                 !(
                   todo.id | isEditModeActivePipe : todosInEditMode
-                ) as isEditActive
+                )
               "
             >
               <button class="btn btn-sm btn-success" (click)="onEdit(todo)">

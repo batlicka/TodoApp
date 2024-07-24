@@ -1,5 +1,5 @@
 import { TodoService } from './../../services/todo.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from '../../models/todo.model';
 
 @Component({
@@ -7,8 +7,7 @@ import { Todo } from '../../models/todo.model';
   templateUrl: './todos.component.html',
   styleUrl: './todos.component.css',
 })
-export class TodosComponent implements OnInit {
-  editMode: boolean = true;
+export class TodosComponent implements OnInit { 
   todos: Todo[] = [];
   todosInEditMode: string [] = [];
   newTodo: Todo = {
@@ -17,7 +16,7 @@ export class TodosComponent implements OnInit {
     isComplete: false,    
   };
 
-  constructor(private todoService: TodoService, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.getAllTodos();
@@ -54,8 +53,9 @@ export class TodosComponent implements OnInit {
     this.todoService.updatedTodo(id, todo).subscribe({
       next: (response) => {
         this.getAllTodos();
+        this.cancelt(todo);
       },
-    });
+    });    
   }
 
   deleteTodo(id: string) {
@@ -66,23 +66,19 @@ export class TodosComponent implements OnInit {
     });
   }
 
-  updatet(id: string, todo: Todo) {
-    this.onChange(id, todo);
-  }
-
   cancelt(todo: Todo) {
     //this.editMode = false;
     this.filterOutId(todo.id); 
-    console.log("cancel | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode)) 
-    this.changeDetectorRef.detectChanges();     
+    console.log("cancel | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode))    
+    this.todosInEditMode = [...this.todosInEditMode];     
   }
 
   onEdit(todo: Todo) {
     //this.editMode = true;    
    if(!this.todosInEditMode.includes(todo.id.toString())){
     this.todosInEditMode.push(todo.id.toString())
-    console.log("onEdit | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode));
-    this.changeDetectorRef.detectChanges()   
+    console.log("onEdit | editted row in todosInEditMode: " + JSON.stringify(this.todosInEditMode));   
+    this.todosInEditMode = [...this.todosInEditMode];  
    }
   }
 
