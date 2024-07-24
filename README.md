@@ -16,7 +16,7 @@ client běží na: http://localhost:4200/
 
 ## Popis funkcionality
 - v horní liště jsou 2 položky menu s odkazy na dvě stránky "Todos" a "Completed Todos"
-![image](https://github.com/user-attachments/assets/713ba9cc-8c49-4a2f-9af4-e044662981ba)
+![image](https://github.com/user-attachments/assets/15e949a8-97ba-4470-9d82-e602747d0ef2)
 
 ### "Todos" 
 - nový úkol je možné založit
